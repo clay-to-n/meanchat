@@ -16,7 +16,7 @@ io.on('connection', function(socket){
     io.emit('chat message', message);
     var myDate = new Date(Date.now());
 	var options = { weekday: 'narrow', year: 'numeric', month: 'long', day: 'numeric', hour12: 'true' };
-    
+    console.log(myDate.toLocaleString('en-US', options));
   });
 });
 
