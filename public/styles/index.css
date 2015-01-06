@@ -43,7 +43,6 @@ img {
 }
 .messages li {
   padding: 5px 10px;
-  padding-bottom:25px;
   width: 100%;
   position: relative;
   word-wrap: break-word;
@@ -58,4 +57,6 @@ img {
 .messages .timestamp {
   float: right;
   font-weight: bold;
+  padding-bottom:10px;
+
 }
