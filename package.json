@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "express": "^4.10.7",
-    "gulp": "latest"
+    "gulp": "latest",
+    "moment": "^2.8.4"
   }
 }

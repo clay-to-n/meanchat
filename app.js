@@ -1,6 +1,9 @@
 var app = require('express')();
+var moment = require('moment');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+moment().format();
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -12,11 +15,9 @@ io.on('connection', function(socket){
     console.log('a user disconnected');
   });
   socket.on('chat message', function(message){
-    console.log(message);
+    message.time = moment().format("h:mm A");
     io.emit('chat message', message);
-    var myDate = new Date(Date.now());
-	var options = { weekday: 'narrow', year: 'numeric', month: 'long', day: 'numeric', hour12: 'true' };
-    console.log(myDate.toLocaleString('en-US', options));
+    console.log(message);
   });
 });
 
