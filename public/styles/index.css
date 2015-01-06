@@ -59,17 +59,3 @@ img {
   float: right;
   font-weight: bold;
 }
-#timestamps {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width:8%;
-  float:left;
-}
-#timestamps li {
-  padding: 5px 10px;
-  text-align: right;
-}
-#timestamps li:nth-child(odd) {
-  background: #eee;
-}

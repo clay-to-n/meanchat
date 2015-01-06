@@ -65,11 +65,6 @@
         </span>
       </form><!-- /input-group -->
     </div><!-- /.col-lg-6 -->
-    
-    <!--form id="bottom-bar" action="">
-      <input id="msgText" class="well well-sm" autocomplete="off"/>
-      <button type="button" class="btn">Send</button>
-    </form-->
 
 <!--
     <video id="video" width="160" height="120" autoplay></video>
@@ -108,8 +103,7 @@
         $('.messages > li:last-child').append($('<span style="font-weight:normal">').text(msgString));
         
         $('.messages > li:last-child').append($('<style="float: right" class="timestamp">').text(message['time']));
-        console.log($('.messages > li:last-child'));
-        //make timestamp height match message (10px is padding on message)
+        //make height match message (10px is padding on message)
         $('.messages > li:last-child').css("height", ($('.messages > li:last-child').height()));
         //moving body to scrollHeight
         scrollHeight+=($('.messages > li:last-child').height());
@@ -159,7 +153,6 @@
         $('#timestamps > li:last-child').css("height", ($('.messages > li:last-child').height()));
         //moving body to scrollHeight
         scrollHeight+=($('.messages > li').last().height());
-        console.log($('.messages').last());
         $('body').scrollTop(scrollHeight); 
 
       });
