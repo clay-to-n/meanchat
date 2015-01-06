@@ -39,11 +39,11 @@ img {
   width: 100%;
   margin: 0;
   padding: 0;
-  padding-bottom: 80px;
   float:left;
 }
 .messages li {
   padding: 5px 10px;
+  padding-bottom:25px;
   width: 100%;
   position: relative;
   word-wrap: break-word;
