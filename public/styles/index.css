@@ -58,6 +58,8 @@ img {
 .messages .timestamp {
   float: right;
   font-weight: bold;
+  padding-bottom:10px;
+
 }
 #header {
   top:0px;
