@@ -11,7 +11,7 @@
     <title>Meanchat</title>
 
     <script type="text/javascript">
-          //camera stuff
+      //camera stuff
       window.addEventListener("DOMContentLoaded", function() {
         // Grab elements, create settings, etc.
         var canvas = document.getElementById("canvas"),
@@ -45,10 +45,10 @@
   </head>
 
   <body>
-    <div>
-      <label>User:</label>
-      <input id="name" type="text" value="Anonymous">
-    </div>
+
+    <label>User:</label>
+    <input id="name" type="text" value="Anonymous">
+
     <ul class="messages"></ul>
     
     <div class="col-lg-12" id="bottom-bar">
@@ -64,14 +64,32 @@
           <button class="btn btn-default" type="submit">Send</button>
         </span>
       </form><!-- /input-group -->
-   </div><!-- /.col-lg-12 -->
+    </div><!-- /.col-lg-6 -->
+    
+    <!--form id="bottom-bar" action="">
+      <input id="msgText" class="well well-sm" autocomplete="off"/>
+      <button type="button" class="btn">Send</button>
+    </form-->
+
+<!--
+    <video id="video" width="160" height="120" autoplay></video>
+    <button id="shutter">Snap Photo</button>
+    <button id="videoShutter">Take GIF</button>
+    <canvas id="canvas" style="display:none" width="160" height="120"></canvas>
+
+    <video id="vid" controls loop>
+      <source src=video.webm type=video/webm>
+      <source src=video.ogg type=video/ogg>
+      <source src=video.mp4 type=video/mp4>
+    </video>
+  -->
 
     <script>
       var socket = io();
       var scrollHeight = 0; //keeps track of how tall total messages are to know where to scroll to
 
-      //adding margin so messages don't go behind bottom bar (5px is how tall bottom padding is)
-      $('.messages').css("margin-bottom",($('#bottom-bar').height()+5));
+      //adding margin so messages don't go behind bottom bar
+      $('.messages').css("margin-bottom",$('#video').height());
 
       $('div').submit(function(){
         var message = {
@@ -92,15 +110,38 @@
         $('.messages > li:last-child').append($('<style="float: right" class="timestamp">').text(message['time']));
         console.log($('.messages > li:last-child'));
         //make timestamp height match message (10px is padding on message)
-        $('.messages > li:last-child').css("height", ($('#messages > li:last-child').height()));
+        $('.messages > li:last-child').css("height", ($('.messages > li:last-child').height()));
         //moving body to scrollHeight
         scrollHeight+=($('.messages > li:last-child').height());
         $('body').scrollTop(scrollHeight); 
       });
 
+      //video stuff
+      // $('#videoShutter').click(function(){
+      //     var v = document.getElementById('vid');
+      //     var canvas = document.getElementById('canvas');
+      //     var context = canvas.getContext('2d');
+
+      //     var cw = Math.floor(canvas.clientWidth / 100);
+      //     var ch = Math.floor(canvas.clientHeight / 100);
+      //     canvas.width = cw;
+      //     canvas.height = ch;
+
+      //     v.addEventListener('play', function(){
+      //         draw(this,context,cw,ch);
+      //     },false);
+
+      // });
+
+      // function draw(v,c,w,h) {
+      //     if(v.paused || v.ended) return false;
+      //     v.drawImage(c,0,0,w,h);
+      //     setTimeout(draw,20,v,c,w,h);
+      // }
 
 
-      // Trigger photo take
+
+      // When photo is captured, send message too
       $('#shutter').click(function() {
         var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
         context.drawImage(video, 0, 0, 160, 120);
@@ -115,9 +156,10 @@
         
         //$('#timestamps').append($('<li>').text('add time'));
         //make timestamp height match message (10px is padding on message)
-        $('#timestamps > li:last-child').css("height", ($('#messages > li:last-child').height()));
+        $('#timestamps > li:last-child').css("height", ($('.messages > li:last-child').height()));
         //moving body to scrollHeight
-        scrollHeight+=($('#messages > li:last-child').height());
+        scrollHeight+=($('.messages > li').last().height());
+        console.log($('.messages').last());
         $('body').scrollTop(scrollHeight); 
 
       });
@@ -128,6 +170,55 @@
         image.src = canvas.toDataURL("image/png");
         return image;
       }
+
+      var shots = [];
+      var numShots = 10;
+      var rate = 100; //in milliseconds
+      var count = 0;
+
+      function getGIF() {
+        for(var i=0; i<shots.length; i++) {
+
+        }
+
+      }
+
+
+
+      // var canvas = document.getElementById("canvas");
+      // var shots  = [];
+      // var grabLimit = 10;  // Number of screenshots to take
+      // var grabRate  = 100; // Miliseconds. 500 = half a second
+
+      // var count     = 0;
+
+      // function showResults() {
+      //     //console.log(shots);
+      //     for (var i=0; i<shots.length; i++) {
+      //       document.write('<img src="' + shots[i] + '"/>\n');
+      //     }
+      // }
+
+      // var grabber = setInterval(function(){
+      //   count++;
+
+      //   if (count>grabLimit) {
+      //     clearInterval(grabber);
+      //     showResults();
+      //   }
+
+      //   var img     = canvas.toDataURL("image/png");
+      //   shots.push(img);
+      // }, grabRate);
+
+
+
+
+
+
+
+
+
     </script>
 
   </body>
