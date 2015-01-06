@@ -16,7 +16,7 @@
       #messages li { padding: 5px 10px;}
       #messages li:nth-child(odd) { background: #eee; }
       #timestamps {list-style-type: none; margin: 0; padding: 0; width:7%; float:left;}
-      #timestamps li { padding: 5px 10px;}
+      #timestamps li { padding: 5px 10px;text-align: right;}
       #timestamps li:nth-child(odd) { background: #eee; }
     </style>
   </head>
@@ -54,8 +54,10 @@
 
       socket.on('chat message', function(message){
         //adding new message
-        var msgString = message['sender'].concat(': ').concat(message['text']);
-        $('#messages').append($('<li>').text(msgString));
+        var sender = message['sender'].concat(': ');
+        var msgString = message['text'];
+        $('#messages').append($('<li style="font-weight:bold">').text(sender));
+        $('#messages > li:last-child').append($('<span style="font-weight:normal">').text(msgString));
         $('#timestamps').append($('<li>').text(message['time']));
         //make timestamp height match message (10px is padding on message)
         $('#timestamps > li:last-child').css("height", ($('#messages > li:last-child').height()+10));
