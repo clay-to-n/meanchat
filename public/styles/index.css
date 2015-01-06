@@ -2,8 +2,6 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-body {
   font: 13px Helvetica, Arial;
 }
 form {
@@ -24,6 +22,20 @@ form button {
   background: rgb(130, 224, 255);
   border: none;
   padding: 10px;
+}
+img {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#video {
+  position: fixed;
+  bottom: 43px;
+  left:0px;
+}
+#shutter {
+  position: fixed;
+  bottom: 55px;
+  left:200px;
 }
 #messages {
   list-style-type: none;

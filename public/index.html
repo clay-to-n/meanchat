@@ -5,9 +5,41 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <link rel="stylesheet" href="/styles/index.css">
-
     
     <title>Meanchat</title>
+
+    <script type="text/javascript">
+          //camera stuff
+      window.addEventListener("DOMContentLoaded", function() {
+        // Grab elements, create settings, etc.
+        var canvas = document.getElementById("canvas"),
+          context = canvas.getContext("2d"),
+          video = document.getElementById("video"),
+          videoObj = { "video": true },
+          errBack = function(error) {
+            console.log("Video capture error: ", error.code); 
+          };
+
+        // Put video listeners into place
+        if(navigator.getUserMedia) { // Standard
+          navigator.getUserMedia(videoObj, function(stream) {
+            video.src = stream;
+            video.play();
+          }, errBack);
+        } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+          navigator.webkitGetUserMedia(videoObj, function(stream){
+            video.src = window.webkitURL.createObjectURL(stream);
+            video.play();
+          }, errBack);
+        }
+        else if(navigator.mozGetUserMedia) { // Firefox-prefixed
+          navigator.mozGetUserMedia(videoObj, function(stream){
+            video.src = window.URL.createObjectURL(stream);
+            video.play();
+          }, errBack);
+        }
+      }, false);
+</script>
   </head>
 
   <body>
@@ -20,6 +52,11 @@
     <form id = "bottom-bar" action="">
       <input id="msgText" autocomplete="off" /><button>Send</button>
     </form>
+
+    <video id="video" width="160" height="120" autoplay></video>
+    <button id="shutter">Snap Photo</button>
+    <canvas id="canvas" style="display:none" width="160" height="120"></canvas>
+    <div id="photo"></div>
 
     <script>
       var socket = io();
@@ -50,6 +87,35 @@
         scrollHeight+=($('#messages > li:last-child').height());
         $('body').scrollTop(scrollHeight); 
       });
+
+
+
+      // Trigger photo take
+      $('#shutter').click(function() {
+        var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, 160, 120);
+        var image = convertCanvasToImage(canvas);
+        var imgSender = ($('#name').val()).concat(': ');
+        var imgString = $('#msgText').val();
+        $('#msgText').val('');
+        $('#messages').append($('<li style="font-weight:bold">').text(imgSender));
+        $('#messages > li:last-child').append(image);
+        $('#messages > li:last-child').append($('<span style="font-weight:normal">').text(imgString));
+        $('#timestamps').append($('<li>').text('add time'));
+        //make timestamp height match message (10px is padding on message)
+        $('#timestamps > li:last-child').css("height", ($('#messages > li:last-child').height()));
+        //moving body to scrollHeight
+        scrollHeight+=($('#messages > li:last-child').height());
+        $('body').scrollTop(scrollHeight); 
+
+      });
+
+      // Converts canvas to an image
+      function convertCanvasToImage(canvas) {
+        var image = new Image();
+        image.src = canvas.toDataURL("image/png");
+        return image;
+      }
     </script>
 
   </body>
