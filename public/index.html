@@ -109,8 +109,6 @@
         
         $('.messages > li:last-child').append($('<style="float: right" class="timestamp">').text(message['time']));
         console.log($('.messages > li:last-child'));
-        //make timestamp height match message (10px is padding on message)
-        $('.messages > li:last-child').css("height", ($('.messages > li:last-child').height()));
         //moving body to scrollHeight
         scrollHeight+=($('.messages > li:last-child').height());
         $('body').scrollTop(scrollHeight); 
@@ -156,7 +154,6 @@
         
         //$('#timestamps').append($('<li>').text('add time'));
         //make timestamp height match message (10px is padding on message)
-        $('#timestamps > li:last-child').css("height", ($('.messages > li:last-child').height()));
         //moving body to scrollHeight
         scrollHeight+=($('.messages > li').last().height());
         console.log($('.messages').last());
@@ -171,19 +168,16 @@
         return image;
       }
 
-      var shots = [];
-      var numShots = 10;
-      var rate = 100; //in milliseconds
-      var count = 0;
+      // var shots = [];
+      // var numShots = 10;
+      // var rate = 100; //in milliseconds
+      // var count = 0;
 
-      function getGIF() {
-        for(var i=0; i<shots.length; i++) {
-
-        }
-
-      }
-
-
+      // function getGIF() {
+      //   for(var i=0; i<shots.length; i++) {
+        
+      //   }
+      // }
 
       // var canvas = document.getElementById("canvas");
       // var shots  = [];
