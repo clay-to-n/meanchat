@@ -21,24 +21,29 @@
   <body>
     <div>
       <label>User:</label>
-      <input type="text" ng-model="yourName" placeholder="Enter a name here">
+      <input id = name type="text" ng-model="yourName" placeholder="Enter a name here">
       <hr>
       <h1>Hello {{yourName}}!</h1>
     </div>
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="msgText" autocomplete="off" /><button>Send</button>
     </form>
 
     <script>
       var socket = io();
       $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
+        var message = {
+          'sender': $('#name').val(),
+          'text': $('#msgText').val()
+        };
+        socket.emit('chat message', message);
+        $('#msgText').val('');
         return false;
       });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+      socket.on('chat message', function(message){
+        var msgString = message['sender'].concat(': ').concat(message['text']);
+        $('#messages').append($('<li>').text(msgString));
       });
     </script>
 
