@@ -13,7 +13,8 @@ body {
 #bottom-bar {
   position: fixed;
   bottom: 0;
-  margin-bottom: 20px;
+  background: #eee;
+  height:90px;
 }
 img {
   margin-left: 5px;
@@ -40,7 +41,6 @@ img {
   margin: 0;
   padding: 0;
   float:left;
-  position: fixed;
 }
 .messages li {
   padding: 5px 10px;
@@ -61,9 +61,3 @@ img {
   padding-bottom:10px;
 
 }
-#header {
-  top:0px;
-  position: fixed;
-}
-
-
