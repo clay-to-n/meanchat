@@ -49,34 +49,29 @@
       <label>User:</label>
       <input id="name" type="text" value="Anonymous">
     </div>
-    <ul id="messages"></ul>
-    <ul id="timestamps"></ul>
+    <ul class="messages"></ul>
     
-    <div class="col-lg-6" id="bottom-bar">
-      <form class="input-group" action="">
+    <div class="col-lg-12" id="bottom-bar">
+      <span>
+        <video id="video" autoplay></video>
+        <button id="shutter">Snap Photo</button>
+        <canvas id="canvas" style="display:none" width="160" height="120"></canvas>
+        <div id="photo"></div>
+      </span>
+      <form class="input-group" id="msg-form" action="">
         <input type="text" class="form-control well well-sm" id="msg-text" autocomplete="off" placeholder="Say something!">
         <span class="input-group-btn">
           <button class="btn btn-default" type="submit">Send</button>
         </span>
       </form><!-- /input-group -->
-    </div><!-- /.col-lg-6 -->
-    
-    <!--form id="bottom-bar" action="">
-      <input id="msgText" class="well well-sm" autocomplete="off"/>
-      <button type="button" class="btn">Send</button>
-    </form-->
-
-    <video id="video" width="160" height="120" autoplay></video>
-    <button id="shutter">Snap Photo</button>
-    <canvas id="canvas" style="display:none" width="160" height="120"></canvas>
-    <div id="photo"></div>
+   </div><!-- /.col-lg-12 -->
 
     <script>
       var socket = io();
       var scrollHeight = 0; //keeps track of how tall total messages are to know where to scroll to
 
       //adding margin so messages don't go behind bottom bar (5px is how tall bottom padding is)
-      $('#messages').css("margin-bottom",($('#bottom-bar').height()+5));
+      $('.messages').css("margin-bottom",($('#bottom-bar').height()+5));
 
       $('div').submit(function(){
         var message = {
@@ -91,13 +86,15 @@
         //adding new message
         var sender = message['sender'].concat(': ');
         var msgString = message['text'];
-        $('#messages').append($('<li style="font-weight:bold">').text(sender));
-        $('#messages > li:last-child').append($('<span style="font-weight:normal">').text(msgString));
-        $('#timestamps').append($('<li>').text(message['time']));
+        $('.messages').append($('<li class="text" style="font-weight:bold">').text(sender));
+        $('.messages > li:last-child').append($('<span style="font-weight:normal">').text(msgString));
+        
+        $('.messages > li:last-child').append($('<style="float: right" class="timestamp">').text(message['time']));
+        console.log($('.messages > li:last-child'));
         //make timestamp height match message (10px is padding on message)
-        $('#timestamps > li:last-child').css("height", ($('#messages > li:last-child').height()));
+        $('.messages > li:last-child').css("height", ($('#messages > li:last-child').height()));
         //moving body to scrollHeight
-        scrollHeight+=($('#messages > li:last-child').height());
+        scrollHeight+=($('.messages > li:last-child').height());
         $('body').scrollTop(scrollHeight); 
       });
 
@@ -111,9 +108,9 @@
         var imgSender = ($('#name').val()).concat(': ');
         var imgString = $('#msgText').val();
         $('#msgText').val('');
-        $('#messages').append($('<li style="font-weight:bold">').text(imgSender));
-        $('#messages > li:last-child').append(image);
-        $('#messages > li:last-child').append($('<span style="font-weight:normal">').text(imgString));
+        $('.messages').append($('<li style="font-weight:bold">').text(imgSender));
+        $('.messages > li:last-child').append(image);
+        $('.messages > li:last-child').append($('<span style="font-weight:normal">').text(imgString));
         $('#timestamps').append($('<li>').text('add time'));
         //make timestamp height match message (10px is padding on message)
         $('#timestamps > li:last-child').css("height", ($('#messages > li:last-child').height()));

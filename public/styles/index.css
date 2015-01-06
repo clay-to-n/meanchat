@@ -15,27 +15,41 @@ img {
 }
 #video {
   position: fixed;
-  bottom: 43px;
+  width: 120px;
+  height: 90px; 
+  bottom: 0px;
   left:0px;
 }
 #shutter {
   position: fixed;
   bottom: 55px;
-  left:200px;
+  left:140px;
 }
-#messages {
+#msg-form {
+  padding-left: 120px; 
+}
+.messages {
   list-style-type: none;
+  width: 100%;
   margin: 0;
   padding: 0;
-  width:92%;
   float:left;
 }
-#messages li {
+.messages li {
   padding: 5px 10px;
+  width: 100%;
+  position: relative;
   word-wrap: break-word;
 }
-#messages li:nth-child(odd) {
+.messages li:nth-child(odd) {
   background: #eee;
+}
+.messages .text {
+  float:left;
+}
+.messages .timestamp {
+  float: right;
+  font-weight: bold;
 }
 #timestamps {
   list-style-type: none;
