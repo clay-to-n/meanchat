@@ -29,12 +29,11 @@ form button {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  width:93%;
+  width:92%;
   float:left;
 }
 #messages li {
   padding: 5px 10px;
-  width:100%;
   word-wrap: break-word;
 }
 #messages li:nth-child(odd) {
@@ -44,7 +43,7 @@ form button {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  width:7%;
+  width:8%;
   float:left;
 }
 #timestamps li {
