@@ -31,9 +31,11 @@ img {
   position: fixed;
   bottom: 55px;
   left:140px;
+  z-index: 1;
 }
 #msg-form {
-  padding-left: 120px; 
+  padding-left: 235px; 
+  padding-top: 28px;
 }
 .messages {
   list-style-type: none;
