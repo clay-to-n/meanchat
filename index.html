@@ -57,6 +57,8 @@
         var msgString = message['sender'].concat(': ').concat(message['text']);
         $('#messages').append($('<li>').text(msgString));
         $('#timestamps').append($('<li>').text(message['time']));
+        //make timestamp height match message (10px is padding on message)
+        $('#timestamps > li:last-child').css("height", ($('#messages > li:last-child').height()+10));
         //moving body to scrollHeight
         scrollHeight+=($('#messages > li:last-child').height());
         $('body').scrollTop(scrollHeight); 
