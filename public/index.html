@@ -111,7 +111,9 @@
         $('.messages').append($('<li style="font-weight:bold">').text(imgSender));
         $('.messages > li:last-child').append(image);
         $('.messages > li:last-child').append($('<span style="font-weight:normal">').text(imgString));
-        $('#timestamps').append($('<li>').text('add time'));
+        $('.messages > li:last-child').append($('<style="float: right" class="timestamp">').text('add time'));
+        
+        //$('#timestamps').append($('<li>').text('add time'));
         //make timestamp height match message (10px is padding on message)
         $('#timestamps > li:last-child').css("height", ($('#messages > li:last-child').height()));
         //moving body to scrollHeight
