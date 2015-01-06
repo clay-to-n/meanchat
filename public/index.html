@@ -5,6 +5,8 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <link rel="stylesheet" href="/styles/index.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     
     <title>Meanchat</title>
 
@@ -49,9 +51,20 @@
     </div>
     <ul id="messages"></ul>
     <ul id="timestamps"></ul>
-    <form id = "bottom-bar" action="">
-      <input id="msgText" autocomplete="off" /><button>Send</button>
-    </form>
+    
+    <div class="col-lg-6" id="bottom-bar">
+      <form class="input-group" action="">
+        <input type="text" class="form-control well well-sm" id="msg-text" autocomplete="off" placeholder="Say something!">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">Send</button>
+        </span>
+      </form><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    
+    <!--form id="bottom-bar" action="">
+      <input id="msgText" class="well well-sm" autocomplete="off"/>
+      <button type="button" class="btn">Send</button>
+    </form-->
 
     <video id="video" width="160" height="120" autoplay></video>
     <button id="shutter">Snap Photo</button>
@@ -65,13 +78,13 @@
       //adding margin so messages don't go behind bottom bar (5px is how tall bottom padding is)
       $('#messages').css("margin-bottom",($('#bottom-bar').height()+5));
 
-      $('form').submit(function(){
+      $('div').submit(function(){
         var message = {
           'sender': $('#name').val(),
-          'text': $('#msgText').val()
+          'text': $('#msg-text').val()
         };
         socket.emit('chat message', message);
-        $('#msgText').val('');
+        $('#msg-text').val('');
         return false;
       });
       socket.on('chat message', function(message){
