@@ -2,8 +2,12 @@ var app = require('express')();
 var moment = require('moment');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var serveStatic = require('serve-static')
+
 
 moment().format();
+
+app.use(serveStatic('public'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
