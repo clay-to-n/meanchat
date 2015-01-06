@@ -40,6 +40,7 @@ img {
   margin: 0;
   padding: 0;
   float:left;
+  position: fixed;
 }
 .messages li {
   padding: 5px 10px;
@@ -58,3 +59,9 @@ img {
   float: right;
   font-weight: bold;
 }
+#header {
+  top:0px;
+  position: fixed;
+}
+
+
