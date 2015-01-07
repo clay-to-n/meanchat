@@ -52,7 +52,7 @@
         <li><a class="navbar-brand" href="#">meanChat</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><input id="username" class="well-sm" type="text" placeholder="Anonymous"></li>
+        <li><input id="username" class="well-sm" type="text" placeholder="Anonymous" autocomplete="off"></li>
       </ul>
     </nav>
 
@@ -70,13 +70,7 @@
           <button class="btn btn-default" type="submit">Send</button>
         </span>
       </form><!-- /input-group -->
-    </div><!-- /.col-lg-6 -->
-
-
-
-
-   
-    
+    </div><!-- /.col-lg-12 -->
 
 
 <!--
@@ -99,17 +93,39 @@
       //adding margin so messages don't go behind bottom bar
       $('.messages').css("margin-bottom",$('#video').height());
 
+      // Send chat message
       $('div').submit(function(){
         var message = {
           'sender': $('#username').val(),
           'text': $('#msg-text').val()
         };
+        if (message['sender'] === "")
+          message['sender'] = "Anonymous";
+
         socket.emit('chat message', message);
         $('#msg-text').val('');
         return false;
       });
+      
+      // Send photo message
+      $('#shutter').click(function() {
+        var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, 160, 120);
+        var image = convertCanvasToImage(canvas);
+        image.crossOrigin = "Anonymous";
+        var message = {
+          'sender': $('#username').val(),
+          'image': image['src'].toString('base64')
+        };
+        if (message['sender'] === "")
+          message['sender'] = "Anonymous";
+  
+        socket.emit('image message', message);
+        return false;
+      });
+      
+      // Add new chat messages to the screen
       socket.on('chat message', function(message){
-        //adding new message
         var sender = message['sender'].concat(': ');
         var msgString = message['text'];
         $('.messages').append($('<li class="text" style="font-weight:bold">').text(sender));
@@ -123,6 +139,26 @@
         scrollHeight+=($('.messages > li:last-child').height());
         $('body').scrollTop(scrollHeight); 
       });
+      
+      // Add new image messages to the screen
+      socket.on('image message', function(message){
+        var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
+        var sender = message['sender'].concat(': ');
+        var img = new Image();
+        img.src = message['image'];
+        context.drawImage(img, 200, 200);
+        
+        $('.messages').append($('<li class="text" style="font-weight:bold">').text(sender));
+                $('.messages > li:last-child').append(img);
+        //$('.messages > li:last-child').append($('<span style="font-weight:normal">').text(img.src));
+        $('.messages > li:last-child').append($('<style="float: right" class="timestamp">').text(message['time']));
+        //make height match message (10px is padding on message)
+        $('.messages > li:last-child').css("height", ($('.messages > li:last-child').height()));
+
+        scrollHeight+=($('.messages > li').last().height());
+        $('body').scrollTop(scrollHeight); 
+      });
+
 
       //video stuff
       // $('#videoShutter').click(function(){
@@ -146,29 +182,7 @@
       //     v.drawImage(c,0,0,w,h);
       //     setTimeout(draw,20,v,c,w,h);
       // }
-
-
-
-      // When photo is captured, send message too
-      $('#shutter').click(function() {
-        var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
-        context.drawImage(video, 0, 0, 160, 120);
-        var image = convertCanvasToImage(canvas);
-        var imgSender = ($('#username').val()).concat(': ');
-        var imgString = $('#msgText').val();
-        $('#msgText').val('');
-        $('.messages').append($('<li style="font-weight:bold">').text(imgSender));
-        $('.messages > li:last-child').append(image);
-        $('.messages > li:last-child').append($('<span style="font-weight:normal">').text(imgString));
-        $('.messages > li:last-child').append($('<style="float: right" class="timestamp">').text('add time'));
-        
-        //$('#timestamps').append($('<li>').text('add time'));
-        //make timestamp height match message (10px is padding on message)
-        //moving body to scrollHeight
-        scrollHeight+=($('.messages > li').last().height());
-        $('body').scrollTop(scrollHeight); 
-
-      });
+      
 
       // Converts canvas to an image
       function convertCanvasToImage(canvas) {
