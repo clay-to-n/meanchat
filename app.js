@@ -53,6 +53,11 @@ io.on('connection', function(socket){
     io.emit('chat message', message);
     console.log(message);
   });
+  socket.on('image message', function(message){
+    message.time = moment().format("h:mm A");
+    io.emit('image message', message);
+    console.log('Image message sent');
+  });
 });
 
 http.listen(3000, function(){
