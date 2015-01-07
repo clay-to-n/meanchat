@@ -4,6 +4,36 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var serveStatic = require('serve-static')
 
+var mongo = require('mongodb').MongoClient;
+var format = require('util').format;
+
+mongo.connect('mongodb://127.0.0.1:27017/mydb', function(err, db) {
+  if(err) throw err;
+
+  var collection = db.collection('meanchat');
+  //collection.insert({a:2}, function(err, docs) {
+
+    // collection.count(function(err, count) {
+    //   console.log(format("count = %s", count));
+    // });
+
+    // Locate all the entries using find
+    collection.find().toArray(function(err, results) {
+      console.dir(results);
+      // Let's close the db
+      db.close();
+    });
+  });
+//});
+
+
+// mongo.connect('mongodb://127.0.0.1:27017/mydb', function (err, db) {
+//     var collection = db.collection('meanchat');
+//     collection.insert({ content: msg }, function (err, o) {
+//         if (err) { console.warn(err.message); }
+//         else { console.log("chat message inserted into db: " + msg); }
+//     });
+// });
 
 moment().format();
 
