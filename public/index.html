@@ -41,16 +41,19 @@
           }, errBack);
         }
       }, false);
-</script>
+    </script>
   </head>
 
   <body>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <label>User:</label>
-      <input id="name" type="text" value="Anonymous">
-      </div>
+    
+    <nav id="top-bar" class="navbar navbar-fixed-top" role="navigation">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a class="navbar-brand" href="#">meanChat</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><input id="username" class="well-sm" type="text" placeholder="Anonymous"></li>
+      </ul>
     </nav>
 
     <ul class="messages"></ul>
@@ -98,7 +101,7 @@
 
       $('div').submit(function(){
         var message = {
-          'sender': $('#name').val(),
+          'sender': $('#username').val(),
           'text': $('#msg-text').val()
         };
         socket.emit('chat message', message);
@@ -151,7 +154,7 @@
         var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
         context.drawImage(video, 0, 0, 160, 120);
         var image = convertCanvasToImage(canvas);
-        var imgSender = ($('#name').val()).concat(': ');
+        var imgSender = ($('#username').val()).concat(': ');
         var imgString = $('#msgText').val();
         $('#msgText').val('');
         $('.messages').append($('<li style="font-weight:bold">').text(imgSender));
